@@ -14,9 +14,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->text_show_elements->setStyleSheet("font: 12pt");
     ui->lineEditElement->setStyleSheet("font: 12pt");
     ui->lineEditElement->setValidator(new QIntValidator); // запрещает в Elements вводить что-то кроме цифр
+    this->setWindowTitle("Binary Tree");
     initialization_item();
     hideAllObject();
-
 }
 
 MainWindow::~MainWindow()
@@ -71,7 +71,7 @@ void MainWindow::on_actionOpen_File_triggered()
 
 void MainWindow::paintEvent(QPaintEvent *event) // Функция занимается перерисовкой линий
 {
-
+    Q_UNUSED(event);
     QPainter painter(this);
 
     std::map<std::string,int>::iterator it;
@@ -159,12 +159,12 @@ void MainWindow::on_actionSave_File_triggered()
 
     QTextStream out(&file); // Открываем поток для ввода в файл
 
-
-    for (std::map<std::string,int>::iterator &it = bn.results.begin(); it!= bn.results.end(); ++it){ // переписываем элементы с контейнера в сохраненный файл
-        out << it->second; if ( std::next(it, 1) !=  bn.results.end())  out << " "; }
+    for (auto it = bn.results.begin(); it!= bn.results.end(); ++it) { // переписываем элементы с контейнера в сохраненный файл
+        out << it->second;
+        if(std::next(it, 1) !=  bn.results.end())  out << " ";
+    }
 
     file.close();
-
 }
 
 void MainWindow::initialization_item()
